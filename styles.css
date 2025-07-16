@@ -268,6 +268,191 @@ p {
     margin-bottom: 0.5rem;
 }
 
+/* Spin Wheel Section */
+.spin-wheel-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+}
+
+.spin-wheel-section .section-header h2 {
+    color: #c8a27d;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.spin-wheel-section .section-header p {
+    color: #ecf0f1;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(200, 162, 125, 0.5);
+    }
+    to {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(200, 162, 125, 0.8), 0 0 30px rgba(200, 162, 125, 0.6);
+    }
+}
+
+.spin-wheel-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.wheel-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+#wheel {
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #c8a27d;
+    z-index: 10;
+}
+
+.spin-button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #c8a27d, #8b6f47);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(200, 162, 125, 0.3);
+}
+
+.spin-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(200, 162, 125, 0.4);
+}
+
+.spin-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.wheel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.prize-display {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.prize-result {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: rgba(200, 162, 125, 0.2);
+    border-radius: 10px;
+    border: 2px solid #c8a27d;
+}
+
+.prize-result i {
+    font-size: 3rem;
+    color: #c8a27d;
+    margin-bottom: 1rem;
+}
+
+.prize-result p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.prize-list {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.prize-list h3 {
+    color: #c8a27d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.prize-list ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.prize-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ecf0f1;
+    font-weight: 500;
+}
+
+.prize-list i {
+    color: #c8a27d;
+    width: 20px;
+    text-align: center;
+}
+
+/* Prize Animation */
+@keyframes prizeWon {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.prize-won {
+    animation: prizeWon 0.5s ease;
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
+    border-color: #4CAF50 !important;
+}
+
 /* Rooms Section */
 .rooms {
     padding: 80px 0;
@@ -781,6 +966,31 @@ p {
         height: 300px;
     }
 
+    .spin-wheel-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .wheel-wrapper {
+        order: 2;
+    }
+
+    .wheel-info {
+        order: 1;
+    }
+
+    .prize-list ul {
+        grid-template-columns: 1fr;
+    }
+
+    .spin-wheel-section .section-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .spin-wheel-section .section-header p {
+        font-size: 1.1rem;
+    }
+
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -842,6 +1052,24 @@ p {
 
     .room-card {
         margin: 0 10px;
+    }
+
+    #wheel {
+        width: 300px;
+        height: 300px;
+    }
+
+    .spin-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+
+    .spin-wheel-section .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .spin-wheel-section .section-header p {
+        font-size: 1rem;
     }
 }
 
