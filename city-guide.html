@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered city guide for Grand Luxe Hotel guests - ask questions and analyze images">
+    <meta name="keywords" content="city guide, AI assistant, local information, tourist guide, Grand Luxe">
+    <title>City Guide AI - Grand Luxe Hotel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Grand Luxe</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="rooms.html" class="nav-link">Rooms</a></li>
+                <li><a href="amenities.html" class="nav-link">Amenities</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="games.html" class="nav-link games-btn">Games & Rewards</a></li>
+                <li><a href="city-guide.html" class="nav-link city-guide-btn">City Guide AI</a></li>
+                <li><a href="index.html#booking" class="nav-link booking-btn">Book Now</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Main Button -->
+    <section class="back-to-main">
+        <div class="container">
+            <div class="back-content">
+                <h3><i class="fas fa-arrow-left"></i> Back to Main</h3>
+                <p>Return to the main page</p>
+            </div>
+            <div class="back-buttons">
+                <a href="index.html" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- City Guide Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1>Your AI City Guide</h1>
+                <p>Discover the city like a local with our AI-powered assistant. Ask questions, upload images, and get personalized recommendations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chat Section -->
+    <section class="city-guide-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ask About the City</h2>
+                <p>Get instant information about attractions, restaurants, events, and local recommendations</p>
+            </div>
+            
+            <div class="ai-chat-container">
+                <div class="chat-interface">
+                    <div class="chat-header">
+                        <div class="ai-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="ai-info">
+                            <h3>City Guide AI</h3>
+                            <p>Ask me anything about the city!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai-message">
+                            <div class="message-content">
+                                <p>Hello! I'm your AI city guide. I can help you discover:</p>
+                                <ul>
+                                    <li>🏛️ Popular attractions and landmarks</li>
+                                    <li>🍽️ Best restaurants and cafes</li>
+                                    <li>🎭 Cultural events and activities</li>
+                                    <li>🚶 Walking routes and neighborhoods</li>
+                                    <li>🛍️ Shopping districts and markets</li>
+                                    <li>🌙 Nightlife and entertainment</li>
+                                </ul>
+                                <p>Just ask me anything about the city, or upload an image for analysis!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <div class="input-container">
+                            <input type="text" id="userInput" placeholder="Ask about attractions, restaurants, events..." maxlength="500">
+                            <button id="sendButton" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="image-upload-container">
+                            <label for="imageUpload" class="image-upload-btn">
+                                <i class="fas fa-camera"></i>
+                                <span>Upload Image</span>
+                            </label>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-sidebar">
+                    <div class="quick-questions">
+                        <h3>Quick Questions</h3>
+                        <div class="question-chips">
+                            <button class="question-chip" data-question="What are the top tourist attractions?">
+                                <i class="fas fa-landmark"></i>
+                                Top Attractions
+                            </button>
+                            <button class="question-chip" data-question="Where can I find the best restaurants?">
+                                <i class="fas fa-utensils"></i>
+                                Best Restaurants
+                            </button>
+                            <button class="question-chip" data-question="What cultural events are happening this week?">
+                                <i class="fas fa-calendar"></i>
+                                Cultural Events
+                            </button>
+                            <button class="question-chip" data-question="What are the best shopping areas?">
+                                <i class="fas fa-shopping-bag"></i>
+                                Shopping Areas
+                            </button>
+                            <button class="question-chip" data-question="What's the best way to get around the city?">
+                                <i class="fas fa-bus"></i>
+                                Transportation
+                            </button>
+                            <button class="question-chip" data-question="What are some hidden gems that locals love?">
+                                <i class="fas fa-gem"></i>
+                                Hidden Gems
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="image-analysis-info">
+                        <h3>Image Analysis</h3>
+                        <p>Upload a photo of any place, landmark, or object and I'll provide detailed information about it!</p>
+                        <div class="analysis-features">
+                            <div class="feature">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Landmark Recognition</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Historical Information</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-route"></i>
+                                <span>Directions & Tips</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="city-guide-features">
+        <div class="container">
+            <div class="section-header">
+                <h2>What You Can Discover</h2>
+                <p>Our AI assistant provides comprehensive information about everything the city has to offer</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Landmarks & Attractions</h3>
+                    <p>Get detailed information about historical sites, museums, parks, and iconic landmarks with visiting tips and best times to go.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Dining & Cuisine</h3>
+                    <p>Discover the best restaurants, cafes, and local food spots with recommendations based on your preferences and budget.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Events & Activities</h3>
+                    <p>Stay updated on current events, festivals, concerts, and cultural activities happening during your stay.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Transportation & Routes</h3>
+                    <p>Get directions, public transport information, and walking routes to help you navigate the city efficiently.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3>Shopping & Markets</h3>
+                    <p>Find the best shopping districts, local markets, boutiques, and souvenir shops for unique purchases.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Image Analysis</h3>
+                    <p>Upload photos of places, landmarks, or objects to get instant information, history, and recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grand Luxe</h3>
+                    <p>Experience luxury like never before at our world-class hotel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="amenities.html">Amenities</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Spa & Wellness</a></li>
+                        <li><a href="#">Fine Dining</a></li>
+                        <li><a href="#">Conference Rooms</a></li>
+                        <li><a href="#">Event Planning</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@grandluxe.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Luxury Avenue</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grand Luxe Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="city-guide.js"></script>
+</body>
+</html> 
