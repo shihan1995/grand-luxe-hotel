@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Luxury hotel experience with world-class amenities and exceptional service">
+    <meta name="keywords" content="hotel, luxury, accommodation, resort, booking">
+    <title>Grand Luxe Hotel - Luxury Accommodations</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Grand Luxe</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#rooms" class="nav-link">Rooms</a></li>
+                <li><a href="#amenities" class="nav-link">Amenities</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#booking" class="nav-link booking-btn">Book Now</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Experience Luxury Like Never Before</h1>
+            <p class="hero-subtitle">Discover the perfect blend of comfort, elegance, and exceptional service at Grand Luxe Hotel</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('booking')">Book Your Stay</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('rooms')">Explore Rooms</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="image-overlay"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h3>24/7 Concierge</h3>
+                    <p>Round-the-clock service to meet all your needs</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wifi"></i>
+                    <h3>Free WiFi</h3>
+                    <p>High-speed internet throughout the property</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Fine Dining</h3>
+                    <p>World-class restaurants and room service</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Spa & Wellness</h3>
+                    <p>Rejuvenate your body and mind</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section id="rooms" class="rooms">
+        <div class="container">
+            <div class="section-header">
+                <h2>Luxurious Accommodations</h2>
+                <p>Choose from our carefully curated selection of rooms and suites</p>
+            </div>
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-image">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Deluxe Room">
+                    </div>
+                    <div class="room-content">
+                        <h3>Deluxe Room</h3>
+                        <p>Spacious comfort with modern amenities and city views</p>
+                        <ul class="room-features">
+                            <li><i class="fas fa-bed"></i> King Bed</li>
+                            <li><i class="fas fa-bath"></i> En-suite Bathroom</li>
+                            <li><i class="fas fa-tv"></i> Smart TV</li>
+                            <li><i class="fas fa-coffee"></i> Coffee Maker</li>
+                        </ul>
+                        <div class="room-price">
+                            <span class="price">$299</span>
+                            <span class="per-night">per night</span>
+                        </div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-image">
+                        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Executive Suite">
+                    </div>
+                    <div class="room-content">
+                        <h3>Executive Suite</h3>
+                        <p>Premium luxury with separate living area and panoramic views</p>
+                        <ul class="room-features">
+                            <li><i class="fas fa-bed"></i> King Bed</li>
+                            <li><i class="fas fa-couch"></i> Living Room</li>
+                            <li><i class="fas fa-bath"></i> Jacuzzi</li>
+                            <li><i class="fas fa-wine-glass"></i> Mini Bar</li>
+                        </ul>
+                        <div class="room-price">
+                            <span class="price">$499</span>
+                            <span class="per-night">per night</span>
+                        </div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <div class="room-image">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Presidential Suite">
+                    </div>
+                    <div class="room-content">
+                        <h3>Presidential Suite</h3>
+                        <p>Ultimate luxury with private terrace and butler service</p>
+                        <ul class="room-features">
+                            <li><i class="fas fa-bed"></i> King Bed</li>
+                            <li><i class="fas fa-home"></i> Private Terrace</li>
+                            <li><i class="fas fa-user-tie"></i> Butler Service</li>
+                            <li><i class="fas fa-car"></i> Valet Parking</li>
+                        </ul>
+                        <div class="room-price">
+                            <span class="price">$899</span>
+                            <span class="per-night">per night</span>
+                        </div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="amenities">
+        <div class="container">
+            <div class="section-header">
+                <h2>World-Class Amenities</h2>
+                <p>Everything you need for an unforgettable stay</p>
+            </div>
+            <div class="amenities-grid">
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-swimming-pool"></i>
+                    </div>
+                    <h3>Infinity Pool</h3>
+                    <p>Relax in our heated infinity pool with stunning city views</p>
+                </div>
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Fitness Center</h3>
+                    <p>State-of-the-art equipment available 24/7</p>
+                </div>
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h3>Rooftop Terrace</h3>
+                    <p>Enjoy cocktails and panoramic views</p>
+                </div>
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Valet Parking</h3>
+                    <p>Complimentary valet service for all guests</p>
+                </div>
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Fine Dining</h3>
+                    <p>Multiple restaurants serving international cuisine</p>
+                </div>
+                <div class="amenity-item">
+                    <div class="amenity-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Spa Services</h3>
+                    <p>Rejuvenating treatments and massages</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Grand Luxe</h2>
+                    <p>Located in the heart of the city, Grand Luxe Hotel offers an unparalleled luxury experience. Our commitment to excellence and attention to detail ensures every guest feels like royalty.</p>
+                    <p>With over 20 years of hospitality excellence, we've created a haven where comfort meets sophistication. Our dedicated staff is committed to providing personalized service that exceeds expectations.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h3>150+</h3>
+                            <p>Luxury Rooms</p>
+                        </div>
+                        <div class="stat">
+                            <h3>4.9★</h3>
+                            <p>Guest Rating</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>Concierge Service</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hotel Lobby">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <div class="booking-content">
+                <div class="booking-form">
+                    <h2>Reserve Your Stay</h2>
+                    <form class="reservation-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="check-in">Check-in Date</label>
+                                <input type="date" id="check-in" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="check-out">Check-out Date</label>
+                                <input type="date" id="check-out" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guests">Guests</label>
+                                <select id="guests" required>
+                                    <option value="">Select</option>
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="room-type">Room Type</label>
+                                <select id="room-type" required>
+                                    <option value="">Select</option>
+                                    <option value="deluxe">Deluxe Room</option>
+                                    <option value="executive">Executive Suite</option>
+                                    <option value="presidential">Presidential Suite</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">Check Availability</button>
+                    </form>
+                </div>
+                <div class="booking-info">
+                    <h3>Why Choose Grand Luxe?</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Prime downtown location</li>
+                        <li><i class="fas fa-check"></i> 24/7 concierge service</li>
+                        <li><i class="fas fa-check"></i> Complimentary breakfast</li>
+                        <li><i class="fas fa-check"></i> Free WiFi throughout</li>
+                        <li><i class="fas fa-check"></i> Spa and fitness access</li>
+                        <li><i class="fas fa-check"></i> Valet parking included</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get in Touch</h2>
+                <p>We're here to help with any questions or special requests</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Address</h3>
+                            <p>123 Luxury Avenue<br>Downtown District<br>City, State 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@grandluxe.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grand Luxe</h3>
+                    <p>Experience luxury like never before at our world-class hotel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#rooms">Rooms</a></li>
+                        <li><a href="#amenities">Amenities</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Spa & Wellness</a></li>
+                        <li><a href="#">Fine Dining</a></li>
+                        <li><a href="#">Conference Rooms</a></li>
+                        <li><a href="#">Event Planning</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@grandluxe.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Luxury Avenue</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grand Luxe Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
