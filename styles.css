@@ -453,6 +453,242 @@ p {
     border-color: #4CAF50 !important;
 }
 
+/* Memory Game Section */
+.memory-game-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    color: white;
+}
+
+.memory-game-section .section-header h2 {
+    color: #c8a27d;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.memory-game-section .section-header p {
+    color: #ecf0f1;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.memory-game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ecf0f1;
+    font-weight: 600;
+}
+
+.stat-item i {
+    color: #c8a27d;
+    font-size: 1.2rem;
+}
+
+.memory-board {
+    display: grid;
+    gap: 10px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    justify-content: center;
+}
+
+.memory-card {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #c8a27d, #8b6f47);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 2rem;
+    color: white;
+    border: 2px solid transparent;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.memory-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(200, 162, 125, 0.3);
+}
+
+.memory-card.flipped {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    animation: cardMatched 0.5s ease;
+}
+
+.memory-card.disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+@keyframes cardMatched {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.game-rules {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-rules h3 {
+    color: #c8a27d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.game-rules ul {
+    list-style: none;
+}
+
+.game-rules li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #ecf0f1;
+    font-weight: 500;
+}
+
+.game-rules i {
+    color: #c8a27d;
+    width: 20px;
+    text-align: center;
+}
+
+.reward-display {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.memory-reward {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: rgba(200, 162, 125, 0.2);
+    border-radius: 10px;
+    border: 2px solid #c8a27d;
+}
+
+.memory-reward i {
+    font-size: 3rem;
+    color: #c8a27d;
+    margin-bottom: 1rem;
+}
+
+.memory-reward p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.difficulty-selector {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.difficulty-selector h3 {
+    color: #c8a27d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.difficulty-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.difficulty-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: #ecf0f1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.difficulty-btn:hover {
+    background: rgba(200, 162, 125, 0.2);
+    border-color: #c8a27d;
+}
+
+.difficulty-btn.active {
+    background: linear-gradient(135deg, #c8a27d, #8b6f47);
+    border-color: #c8a27d;
+    color: white;
+}
+
 /* Rooms Section */
 .rooms {
     padding: 80px 0;
@@ -983,11 +1219,52 @@ p {
         grid-template-columns: 1fr;
     }
 
+    .memory-game-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .game-wrapper {
+        order: 2;
+    }
+
+    .game-info {
+        order: 1;
+    }
+
+    .game-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .game-stats {
+        justify-content: center;
+    }
+
+    .memory-board {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .memory-card {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
     .spin-wheel-section .section-header h2 {
         font-size: 2.5rem;
     }
 
     .spin-wheel-section .section-header p {
+        font-size: 1.1rem;
+    }
+
+    .memory-game-section .section-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .memory-game-section .section-header p {
         font-size: 1.1rem;
     }
 
@@ -1070,6 +1347,31 @@ p {
 
     .spin-wheel-section .section-header p {
         font-size: 1rem;
+    }
+
+    .memory-game-section .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .memory-game-section .section-header p {
+        font-size: 1rem;
+    }
+
+    .memory-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .memory-card {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .game-stats {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
 

@@ -1,4 +1,4 @@
-// Mobile Navigation Toggle
+// Navigation functionality
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -7,25 +7,516 @@ hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
 }));
 
-// Smooth scrolling function
+// Smooth scrolling for anchor links
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
     if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        element.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
+// Form handling
+document.addEventListener('DOMContentLoaded', function() {
+    // Booking form
+    const bookingForm = document.querySelector('.reservation-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Booking request submitted! We\'ll contact you soon.', 'success');
+            // Reset spin wheel when booking
+            localStorage.removeItem('spinUsed');
+            updateSpinButton();
+        });
+    }
+
+    // Contact form
+    const contactForm = document.querySelector('.contact-form form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+        });
+    }
+});
+
+// Notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()">&times;</button>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Add CSS for notification animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    .notification-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    .notification button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+document.head.appendChild(style);
+
+// Spin Wheel Game
+class SpinWheel {
+    constructor() {
+        this.canvas = document.getElementById('wheel');
+        this.ctx = this.canvas.getContext('2d');
+        this.isSpinning = false;
+        this.prizes = [
+            '50% Off Room Rate',
+            'Free Breakfast',
+            'Spa Treatment',
+            '25% Off Room Rate',
+            'Free Welcome Drink',
+            '15% Off Room Rate',
+            'Free Valet Parking',
+            '10% Off Room Rate'
+        ];
+        this.colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
+            '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'
+        ];
+        this.init();
+    }
+
+    init() {
+        this.drawWheel();
+        this.updateSpinButton();
+    }
+
+    drawWheel() {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const radius = 180;
+        const sliceAngle = (2 * Math.PI) / this.prizes.length;
+
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        for (let i = 0; i < this.prizes.length; i++) {
+            const startAngle = i * sliceAngle;
+            const endAngle = startAngle + sliceAngle;
+
+            // Draw slice
+            this.ctx.beginPath();
+            this.ctx.moveTo(centerX, centerY);
+            this.ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            this.ctx.closePath();
+            this.ctx.fillStyle = this.colors[i];
+            this.ctx.fill();
+            this.ctx.strokeStyle = '#fff';
+            this.ctx.lineWidth = 2;
+            this.ctx.stroke();
+
+            // Draw text
+            this.ctx.save();
+            this.ctx.translate(centerX, centerY);
+            this.ctx.rotate(startAngle + sliceAngle / 2);
+            this.ctx.textAlign = 'right';
+            this.ctx.fillStyle = '#fff';
+            this.ctx.font = 'bold 12px Arial';
+            this.ctx.fillText(this.prizes[i], radius - 20, 4);
+            this.ctx.restore();
+        }
+
+        // Draw center circle
+        this.ctx.beginPath();
+        this.ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
+        this.ctx.fillStyle = '#c8a27d';
+        this.ctx.fill();
+        this.ctx.strokeStyle = '#fff';
+        this.ctx.lineWidth = 3;
+        this.ctx.stroke();
+    }
+
+    spin() {
+        if (this.isSpinning) return;
+
+        const spinUsed = localStorage.getItem('spinUsed');
+        if (spinUsed) {
+            showNotification('You\'ve already used your spin for this stay!', 'error');
+            return;
+        }
+
+        this.isSpinning = true;
+        const spinButton = document.getElementById('spin-btn');
+        spinButton.disabled = true;
+        spinButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
+
+        const spins = 5 + Math.random() * 5;
+        const duration = 3000;
+        const startTime = Date.now();
+        const startRotation = 0;
+        const endRotation = startRotation + (spins * 360) + (Math.random() * 360);
+
+        const animate = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentRotation = startRotation + (endRotation - startRotation) * easeOut;
+
+            this.canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                this.handleSpinResult(endRotation);
+            }
+        };
+
+        animate();
+    }
+
+    handleSpinResult(finalRotation) {
+        const sliceAngle = 360 / this.prizes.length;
+        const normalizedRotation = (360 - (finalRotation % 360)) % 360;
+        const prizeIndex = Math.floor(normalizedRotation / sliceAngle);
+        const prize = this.prizes[prizeIndex];
+
+        // Save spin usage
+        localStorage.setItem('spinUsed', 'true');
+        this.updateSpinButton();
+
+        // Update prize display
+        const prizeResult = document.getElementById('prize-result');
+        prizeResult.innerHTML = `
+            <i class="fas fa-gift"></i>
+            <p>${prize}</p>
+        `;
+        prizeResult.classList.add('prize-won');
+
+        showNotification(`Congratulations! You won: ${prize}`, 'success');
+
+        this.isSpinning = false;
+        const spinButton = document.getElementById('spin-btn');
+        spinButton.disabled = true;
+        spinButton.innerHTML = '<i class="fas fa-check"></i> SPIN USED';
+    }
+
+    updateSpinButton() {
+        const spinButton = document.getElementById('spin-btn');
+        const spinUsed = localStorage.getItem('spinUsed');
+        
+        if (spinUsed) {
+            spinButton.disabled = true;
+            spinButton.innerHTML = '<i class="fas fa-check"></i> SPIN USED';
+        } else {
+            spinButton.disabled = false;
+            spinButton.innerHTML = '<i class="fas fa-play"></i> SPIN THE WHEEL';
+        }
+    }
+}
+
+// Memory Game
+class MemoryGame {
+    constructor() {
+        this.cards = [];
+        this.flippedCards = [];
+        this.matchedPairs = 0;
+        this.moves = 0;
+        this.score = 0;
+        this.timer = 0;
+        this.timerInterval = null;
+        this.gameStarted = false;
+        this.difficulty = 'easy';
+        this.cardIcons = [
+            'fas fa-bed', 'fas fa-utensils', 'fas fa-spa', 'fas fa-swimming-pool',
+            'fas fa-wifi', 'fas fa-car', 'fas fa-concierge-bell', 'fas fa-dumbbell',
+            'fas fa-umbrella-beach', 'fas fa-wine-glass', 'fas fa-coffee', 'fas fa-tv',
+            'fas fa-bath', 'fas fa-couch', 'fas fa-home', 'fas fa-user-tie',
+            'fas fa-glass-martini', 'fas fa-parking', 'fas fa-percentage', 'fas fa-star',
+            'fas fa-heart', 'fas fa-gem', 'fas fa-crown', 'fas fa-trophy',
+            'fas fa-music', 'fas fa-camera', 'fas fa-plane', 'fas fa-ship',
+            'fas fa-bicycle', 'fas fa-hiking', 'fas fa-fish', 'fas fa-tree'
+        ];
+        this.rewards = [
+            'Free Room Upgrade',
+            'Complimentary Spa Session',
+            'Free Breakfast for 2',
+            'Late Checkout',
+            'Welcome Gift Basket',
+            'Free Parking',
+            'Room Service Credit',
+            'Fitness Class Pass'
+        ];
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.createBoard();
+        this.updateDisplay();
+    }
+
+    setupEventListeners() {
+        const newGameBtn = document.getElementById('new-game-btn');
+        if (newGameBtn) {
+            newGameBtn.addEventListener('click', () => this.newGame());
+        }
+
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                this.difficulty = e.target.dataset.difficulty;
+                this.newGame();
+            });
+        });
+    }
+
+    createBoard() {
+        const board = document.getElementById('memory-board');
+        if (!board) return;
+
+        board.innerHTML = '';
+        
+        const gridSizes = {
+            easy: { cols: 4, rows: 4 },
+            medium: { cols: 6, rows: 6 },
+            hard: { cols: 8, rows: 8 }
+        };
+
+        const size = gridSizes[this.difficulty];
+        const totalCards = size.cols * size.rows;
+        const pairs = totalCards / 2;
+
+        // Create card pairs
+        this.cards = [];
+        for (let i = 0; i < pairs; i++) {
+            const icon = this.cardIcons[i % this.cardIcons.length];
+            this.cards.push(
+                { id: i * 2, icon: icon, isFlipped: false, isMatched: false }
+            );
+        }
+
+        // Shuffle cards
+        this.shuffleCards();
+
+        // Create card elements
+        board.style.gridTemplateColumns = `repeat(${size.cols}, 1fr)`;
+        
+        this.cards.forEach(card => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'memory-card';
+            cardElement.dataset.id = card.id;
+            cardElement.innerHTML = `<i class="${card.icon}"></i>`;
+            
+            cardElement.addEventListener('click', () => this.flipCard(card.id));
+            
+            board.appendChild(cardElement);
+        });
+    }
+
+    shuffleCards() {
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
+    }
+
+    flipCard(cardId) {
+        if (!this.gameStarted) {
+            this.startGame();
+        }
+
+        const card = this.cards.find(c => c.id === cardId);
+        if (!card || card.isFlipped || card.isMatched || this.flippedCards.length >= 2) {
+            return;
+        }
+
+        card.isFlipped = true;
+        this.flippedCards.push(card);
+        
+        const cardElement = document.querySelector(`[data-id="${cardId}"]`);
+        cardElement.classList.add('flipped');
+
+        if (this.flippedCards.length === 2) {
+            this.moves++;
+            this.checkMatch();
+        }
+
+        this.updateDisplay();
+    }
+
+    checkMatch() {
+        const [card1, card2] = this.flippedCards;
+        
+        setTimeout(() => {
+            if (card1.icon === card2.icon) {
+                // Match found
+                card1.isMatched = card2.isMatched = true;
+                this.matchedPairs++;
+                this.score += 100;
+                
+                const card1Element = document.querySelector(`[data-id="${card1.id}"]`);
+                const card2Element = document.querySelector(`[data-id="${card2.id}"]`);
+                
+                card1Element.classList.add('matched');
+                card2Element.classList.add('matched');
+
+                if (this.matchedPairs === this.cards.length / 2) {
+                    this.gameWon();
+                }
+            } else {
+                // No match
+                card1.isFlipped = card2.isFlipped = false;
+                
+                const card1Element = document.querySelector(`[data-id="${card1.id}"]`);
+                const card2Element = document.querySelector(`[data-id="${card2.id}"]`);
+                
+                card1Element.classList.remove('flipped');
+                card2Element.classList.remove('flipped');
+            }
+            
+            this.flippedCards = [];
+            this.updateDisplay();
+        }, 1000);
+    }
+
+    startGame() {
+        this.gameStarted = true;
+        this.timer = 0;
+        this.timerInterval = setInterval(() => {
+            this.timer++;
+            this.updateDisplay();
+        }, 1000);
+    }
+
+    gameWon() {
+        clearInterval(this.timerInterval);
+        
+        const timeBonus = Math.max(0, 120 - this.timer) * 10;
+        const moveBonus = Math.max(0, 50 - this.moves) * 5;
+        this.score += timeBonus + moveBonus;
+
+        const reward = this.rewards[Math.floor(Math.random() * this.rewards.length)];
+        
+        const rewardDisplay = document.getElementById('memory-reward');
+        rewardDisplay.innerHTML = `
+            <i class="fas fa-trophy"></i>
+            <p>${reward}</p>
+            <small>Score: ${this.score}</small>
+        `;
+        rewardDisplay.classList.add('prize-won');
+
+        showNotification(`Congratulations! You won: ${reward}`, 'success');
+        
+        // Save game completion
+        localStorage.setItem('memoryGameCompleted', 'true');
+    }
+
+    newGame() {
+        clearInterval(this.timerInterval);
+        this.cards = [];
+        this.flippedCards = [];
+        this.matchedPairs = 0;
+        this.moves = 0;
+        this.score = 0;
+        this.timer = 0;
+        this.gameStarted = false;
+        
+        this.createBoard();
+        this.updateDisplay();
+        
+        const rewardDisplay = document.getElementById('memory-reward');
+        rewardDisplay.innerHTML = `
+            <i class="fas fa-gamepad"></i>
+            <p>Complete the game to win a special reward!</p>
+        `;
+        rewardDisplay.classList.remove('prize-won');
+    }
+
+    updateDisplay() {
+        const timerElement = document.getElementById('timer');
+        const movesElement = document.getElementById('moves');
+        const scoreElement = document.getElementById('score');
+
+        if (timerElement) {
+            const minutes = Math.floor(this.timer / 60);
+            const seconds = this.timer % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        if (movesElement) {
+            movesElement.textContent = this.moves;
+        }
+
+        if (scoreElement) {
+            scoreElement.textContent = this.score;
+        }
+    }
+}
+
+// Initialize games when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize spin wheel
+    const spinWheel = new SpinWheel();
+    
+    // Add spin button event listener
+    const spinButton = document.getElementById('spin-btn');
+    if (spinButton) {
+        spinButton.addEventListener('click', () => spinWheel.spin());
+    }
+
+    // Initialize memory game
+    const memoryGame = new MemoryGame();
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 100) {
         navbar.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -52,470 +543,13 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.feature-card, .room-card, .amenity-item');
-    
-    animateElements.forEach(el => {
+document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.feature-card, .room-card, .amenity-item');
+    animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
-    });
-});
-
-// Spin Wheel Game with One-Time Limit
-class SpinWheel {
-    constructor() {
-        this.canvas = document.getElementById('wheel');
-        this.ctx = this.canvas.getContext('2d');
-        this.spinBtn = document.getElementById('spin-btn');
-        this.prizeResult = document.getElementById('prize-result');
-        
-        this.prizes = [
-            { name: '50% Off Room Rate', color: '#e74c3c', icon: 'fas fa-percentage' },
-            { name: 'Free Breakfast', color: '#f39c12', icon: 'fas fa-utensils' },
-            { name: 'Spa Treatment', color: '#9b59b6', icon: 'fas fa-spa' },
-            { name: '25% Off Room Rate', color: '#3498db', icon: 'fas fa-percentage' },
-            { name: 'Free Welcome Drink', color: '#1abc9c', icon: 'fas fa-glass-martini' },
-            { name: '15% Off Room Rate', color: '#e67e22', icon: 'fas fa-percentage' },
-            { name: 'Free Valet Parking', color: '#34495e', icon: 'fas fa-parking' },
-            { name: '10% Off Room Rate', color: '#95a5a6', icon: 'fas fa-percentage' }
-        ];
-        
-        this.isSpinning = false;
-        this.currentRotation = 0;
-        this.segments = this.prizes.length;
-        this.segmentAngle = (2 * Math.PI) / this.segments;
-        
-        // One-time spin tracking
-        this.sessionKey = 'grandLuxeSpinSession';
-        this.hasSpun = this.checkIfAlreadySpun();
-        
-        this.init();
-    }
-    
-    checkIfAlreadySpun() {
-        const sessionData = localStorage.getItem(this.sessionKey);
-        if (sessionData) {
-            const data = JSON.parse(sessionData);
-            const now = new Date();
-            const spinTime = new Date(data.timestamp);
-            
-            // Check if it's been more than 24 hours (new stay)
-            const hoursDiff = (now - spinTime) / (1000 * 60 * 60);
-            if (hoursDiff < 24) {
-                return true;
-            } else {
-                // Clear old session data
-                localStorage.removeItem(this.sessionKey);
-                return false;
-            }
-        }
-        return false;
-    }
-    
-    markAsSpun() {
-        const sessionData = {
-            timestamp: new Date().toISOString(),
-            hasSpun: true
-        };
-        localStorage.setItem(this.sessionKey, JSON.stringify(sessionData));
-    }
-    
-    init() {
-        this.drawWheel();
-        this.updateSpinButton();
-        this.spinBtn.addEventListener('click', () => this.handleSpinClick());
-        
-        // Add hover effect to spin button
-        this.spinBtn.addEventListener('mouseenter', () => {
-            if (!this.isSpinning && !this.hasSpun) {
-                this.spinBtn.style.transform = 'translateY(-3px) scale(1.05)';
-            }
-        });
-        
-        this.spinBtn.addEventListener('mouseleave', () => {
-            if (!this.isSpinning && !this.hasSpun) {
-                this.spinBtn.style.transform = 'translateY(0) scale(1)';
-            }
-        });
-    }
-    
-    updateSpinButton() {
-        if (this.hasSpun) {
-            this.spinBtn.disabled = true;
-            this.spinBtn.innerHTML = '<i class="fas fa-check-circle"></i> ALREADY SPUN';
-            this.spinBtn.style.background = 'linear-gradient(135deg, #95a5a6, #7f8c8d)';
-            this.spinBtn.style.cursor = 'not-allowed';
-            
-            // Show already spun message
-            this.prizeResult.innerHTML = `
-                <i class="fas fa-info-circle"></i>
-                <p>You've already used your spin for this stay. Book a room to spin again!</p>
-            `;
-        } else {
-            this.spinBtn.disabled = false;
-            this.spinBtn.innerHTML = '<i class="fas fa-play"></i> SPIN THE WHEEL';
-            this.spinBtn.style.background = 'linear-gradient(135deg, #c8a27d, #8b6f47)';
-            this.spinBtn.style.cursor = 'pointer';
-            
-            // Show default message
-            this.prizeResult.innerHTML = `
-                <i class="fas fa-gift"></i>
-                <p>Spin to win amazing rewards! (One spin per stay)</p>
-            `;
-        }
-    }
-    
-    handleSpinClick() {
-        if (this.hasSpun) {
-            showNotification('You\'ve already used your spin for this stay. Book a room to spin again!', 'info');
-            return;
-        }
-        
-        if (this.isSpinning) return;
-        
-        this.spin();
-    }
-    
-    drawWheel() {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const radius = Math.min(centerX, centerY) - 20;
-        
-        // Clear canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Draw segments
-        for (let i = 0; i < this.segments; i++) {
-            const startAngle = i * this.segmentAngle + this.currentRotation;
-            const endAngle = (i + 1) * this.segmentAngle + this.currentRotation;
-            
-            // Draw segment
-            this.ctx.beginPath();
-            this.ctx.moveTo(centerX, centerY);
-            this.ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-            this.ctx.closePath();
-            this.ctx.fillStyle = this.prizes[i].color;
-            this.ctx.fill();
-            this.ctx.strokeStyle = '#fff';
-            this.ctx.lineWidth = 3;
-            this.ctx.stroke();
-            
-            // Draw text
-            this.ctx.save();
-            this.ctx.translate(centerX, centerY);
-            this.ctx.rotate(startAngle + this.segmentAngle / 2);
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
-            this.ctx.fillStyle = '#fff';
-            this.ctx.font = 'bold 12px Inter';
-            this.ctx.fillText(this.prizes[i].name, radius * 0.7, 0);
-            this.ctx.restore();
-        }
-        
-        // Draw center circle
-        this.ctx.beginPath();
-        this.ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
-        this.ctx.fillStyle = '#c8a27d';
-        this.ctx.fill();
-        this.ctx.strokeStyle = '#fff';
-        this.ctx.lineWidth = 3;
-        this.ctx.stroke();
-    }
-    
-    spin() {
-        if (this.isSpinning || this.hasSpun) return;
-        
-        this.isSpinning = true;
-        this.spinBtn.disabled = true;
-        this.spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
-        
-        // Random number of full rotations (3-5) plus random segment
-        const fullRotations = 3 + Math.random() * 2;
-        const randomSegment = Math.floor(Math.random() * this.segments);
-        const targetAngle = fullRotations * 2 * Math.PI + (randomSegment * this.segmentAngle);
-        
-        // Calculate final rotation
-        const finalRotation = this.currentRotation + targetAngle;
-        
-        // Animate the spin
-        const startTime = performance.now();
-        const duration = 3000; // 3 seconds
-        
-        const animate = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Easing function for smooth deceleration
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            
-            this.currentRotation = this.currentRotation + (targetAngle * easeOut);
-            this.drawWheel();
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                this.onSpinComplete(randomSegment);
-            }
-        };
-        
-        requestAnimationFrame(animate);
-    }
-    
-    onSpinComplete(segmentIndex) {
-        const prize = this.prizes[segmentIndex];
-        
-        // Mark as spun
-        this.hasSpun = true;
-        this.markAsSpun();
-        
-        // Update prize display
-        this.prizeResult.innerHTML = `
-            <i class="${prize.icon}"></i>
-            <p>Congratulations! You won: ${prize.name}</p>
-            <small style="color: #ecf0f1; font-size: 0.9rem;">One spin per stay - Book now to claim your prize!</small>
-        `;
-        
-        // Add winning animation
-        this.prizeResult.classList.add('prize-won');
-        
-        // Show notification
-        showNotification(`🎉 You won: ${prize.name}! Book now to claim your prize.`, 'success');
-        
-        // Update button state
-        setTimeout(() => {
-            this.updateSpinButton();
-            this.prizeResult.classList.remove('prize-won');
-        }, 2000);
-        
-        this.isSpinning = false;
-        
-        // Save prize to localStorage for future reference
-        this.savePrize(prize);
-    }
-    
-    savePrize(prize) {
-        const savedPrizes = JSON.parse(localStorage.getItem('grandLuxePrizes') || '[]');
-        savedPrizes.push({
-            ...prize,
-            wonAt: new Date().toISOString(),
-            sessionId: this.sessionKey
-        });
-        localStorage.setItem('grandLuxePrizes', JSON.stringify(savedPrizes));
-    }
-    
-    // Method to reset spin (for testing or admin purposes)
-    resetSpin() {
-        localStorage.removeItem(this.sessionKey);
-        this.hasSpun = false;
-        this.updateSpinButton();
-        showNotification('Spin reset! You can spin again.', 'info');
-    }
-}
-
-// Initialize spin wheel when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const spinWheel = new SpinWheel();
-    
-    // Add confetti effect for big wins
-    window.spinWheel = spinWheel;
-    
-    // Add reset functionality for development (remove in production)
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log('Development mode: Use window.spinWheel.resetSpin() to reset the spin');
-    }
-});
-
-// Form handling
-document.addEventListener('DOMContentLoaded', () => {
-    // Booking form
-    const bookingForm = document.querySelector('.reservation-form');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            const guests = document.getElementById('guests').value;
-            const roomType = document.getElementById('room-type').value;
-            
-            if (!checkIn || !checkOut || !guests || !roomType) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            // Simulate booking process
-            showNotification('Checking availability...', 'info');
-            
-            setTimeout(() => {
-                showNotification('Availability checked! We\'ll contact you soon.', 'success');
-                bookingForm.reset();
-                
-                // Reset spin wheel for new booking
-                if (window.spinWheel) {
-                    window.spinWheel.resetSpin();
-                }
-            }, 2000);
-        });
-    }
-    
-    // Contact form
-    const contactForm = document.querySelector('.contact-form form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(contactForm);
-            const name = contactForm.querySelector('input[type="text"]').value;
-            const email = contactForm.querySelector('input[type="email"]').value;
-            const subject = contactForm.querySelectorAll('input[type="text"]')[1].value;
-            const message = contactForm.querySelector('textarea').value;
-            
-            if (!name || !email || !subject || !message) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-            
-            // Simulate sending message
-            showNotification('Sending message...', 'info');
-            
-            setTimeout(() => {
-                showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-                contactForm.reset();
-            }, 2000);
-        });
-    }
-});
-
-// Notification system
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => notification.remove());
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        z-index: 10000;
-        max-width: 400px;
-        animation: slideInRight 0.3s ease;
-    `;
-    
-    // Add to page
-    document.body.appendChild(notification);
-    
-    // Close button functionality
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    });
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
-    }, 5000);
-}
-
-// Add CSS for notifications
-const notificationStyles = document.createElement('style');
-notificationStyles.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-    
-    .notification-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .notification-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-    }
-    
-    .notification-close:hover {
-        opacity: 0.8;
-    }
-`;
-document.head.appendChild(notificationStyles);
-
-// Room booking buttons
-document.addEventListener('DOMContentLoaded', () => {
-    const bookButtons = document.querySelectorAll('.room-card .btn-primary');
-    
-    bookButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const roomCard = button.closest('.room-card');
-            const roomName = roomCard.querySelector('h3').textContent;
-            const roomPrice = roomCard.querySelector('.price').textContent;
-            
-            // Scroll to booking section
-            scrollToSection('booking');
-            
-            // Pre-fill room type
-            setTimeout(() => {
-                const roomTypeSelect = document.getElementById('room-type');
-                if (roomTypeSelect) {
-                    const roomType = roomName.toLowerCase().includes('deluxe') ? 'deluxe' :
-                                   roomName.toLowerCase().includes('executive') ? 'executive' :
-                                   roomName.toLowerCase().includes('presidential') ? 'presidential' : '';
-                    
-                    if (roomType) {
-                        roomTypeSelect.value = roomType;
-                    }
-                }
-                
-                showNotification(`Selected ${roomName} (${roomPrice})`, 'success');
-            }, 1000);
-        });
     });
 });
 
