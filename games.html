@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play exciting games and win exclusive hotel rewards at Grand Luxe Hotel">
+    <meta name="keywords" content="hotel games, spin wheel, memory game, rewards, coupons">
+    <title>Games & Rewards - Grand Luxe Hotel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Grand Luxe</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#rooms" class="nav-link">Rooms</a></li>
+                <li><a href="index.html#amenities" class="nav-link">Amenities</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="index.html#booking" class="nav-link booking-btn">Book Now</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Games Hero Section -->
+    <section class="games-hero">
+        <div class="container">
+            <div class="games-hero-content">
+                <h1>Games & Rewards</h1>
+                <p>Play exciting games and win exclusive hotel rewards! Test your luck and memory to unlock special offers for your stay.</p>
+                <div class="games-nav">
+                    <button class="game-nav-btn active" onclick="showGame('spin-wheel')">
+                        <i class="fas fa-circle-notch"></i>
+                        Spin & Win
+                    </button>
+                    <button class="game-nav-btn" onclick="showGame('memory-game')">
+                        <i class="fas fa-brain"></i>
+                        Memory Match
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spin the Wheel Section -->
+    <section id="spin-wheel" class="game-section spin-wheel-section active">
+        <div class="container">
+            <div class="section-header">
+                <h2>Spin & Win Exclusive Rewards</h2>
+                <p>Try your luck and win amazing discounts and perks for your stay! (One spin per stay)</p>
+            </div>
+            <div class="spin-wheel-container">
+                <div class="wheel-wrapper">
+                    <canvas id="wheel" width="400" height="400"></canvas>
+                    <div class="wheel-pointer"></div>
+                    <button id="spin-btn" class="btn btn-primary spin-button">
+                        <i class="fas fa-play"></i> SPIN THE WHEEL
+                    </button>
+                </div>
+                <div class="wheel-info">
+                    <div class="prize-display">
+                        <h3>Your Prize</h3>
+                        <div id="prize-result" class="prize-result">
+                            <i class="fas fa-gift"></i>
+                            <p>Spin to win amazing rewards!</p>
+                        </div>
+                    </div>
+                    <div class="prize-list">
+                        <h3>Available Prizes</h3>
+                        <ul>
+                            <li><i class="fas fa-percentage"></i> 50% Off Room Rate</li>
+                            <li><i class="fas fa-utensils"></i> Free Breakfast</li>
+                            <li><i class="fas fa-spa"></i> Spa Treatment</li>
+                            <li><i class="fas fa-percentage"></i> 25% Off Room Rate</li>
+                            <li><i class="fas fa-glass-martini"></i> Free Welcome Drink</li>
+                            <li><i class="fas fa-percentage"></i> 15% Off Room Rate</li>
+                            <li><i class="fas fa-parking"></i> Free Valet Parking</li>
+                            <li><i class="fas fa-percentage"></i> 10% Off Room Rate</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memory Game Section -->
+    <section id="memory-game" class="game-section memory-game-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Memory Match Challenge</h2>
+                <p>Test your memory and win exclusive hotel rewards! Match all cards to unlock special offers.</p>
+            </div>
+            <div class="memory-game-container">
+                <div class="game-wrapper">
+                    <div class="game-header">
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="timer">00:00</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <span id="moves">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span id="score">0</span>
+                            </div>
+                        </div>
+                        <button id="new-game-btn" class="btn btn-primary">
+                            <i class="fas fa-play"></i> NEW GAME
+                        </button>
+                    </div>
+                    <div class="memory-board" id="memory-board">
+                        <!-- Cards will be generated by JavaScript -->
+                    </div>
+                </div>
+                <div class="game-info">
+                    <div class="game-rules">
+                        <h3>How to Play</h3>
+                        <ul>
+                            <li><i class="fas fa-info-circle"></i> Click cards to reveal them</li>
+                            <li><i class="fas fa-sync-alt"></i> Find matching pairs</li>
+                            <li><i class="fas fa-clock"></i> Complete in under 2 minutes</li>
+                            <li><i class="fas fa-trophy"></i> Win exclusive rewards!</li>
+                        </ul>
+                    </div>
+                    <div class="reward-display">
+                        <h3>Your Reward</h3>
+                        <div id="memory-reward" class="memory-reward">
+                            <i class="fas fa-gamepad"></i>
+                            <p>Complete the game to win a special reward!</p>
+                        </div>
+                    </div>
+                    <div class="difficulty-selector">
+                        <h3>Difficulty</h3>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn active" data-difficulty="easy">Easy (4x4)</button>
+                            <button class="difficulty-btn" data-difficulty="medium">Medium (6x6)</button>
+                            <button class="difficulty-btn" data-difficulty="hard">Hard (8x8)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Main Site -->
+    <section class="back-to-main">
+        <div class="container">
+            <div class="back-content">
+                <h3>Ready to Book Your Stay?</h3>
+                <p>Experience luxury like never before at Grand Luxe Hotel</p>
+                <div class="back-buttons">
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Back to Main Site
+                    </a>
+                    <a href="index.html#booking" class="btn btn-secondary">
+                        <i class="fas fa-calendar"></i> Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grand Luxe</h3>
+                    <p>Experience luxury like never before at our world-class hotel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#rooms">Rooms</a></li>
+                        <li><a href="index.html#amenities">Amenities</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Spa & Wellness</a></li>
+                        <li><a href="#">Fine Dining</a></li>
+                        <li><a href="#">Conference Rooms</a></li>
+                        <li><a href="#">Event Planning</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@grandluxe.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Luxury Avenue</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grand Luxe Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Game navigation functionality
+        function showGame(gameId) {
+            // Hide all game sections
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected game section
+            document.getElementById(gameId).classList.add('active');
+            
+            // Update navigation buttons
+            document.querySelectorAll('.game-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Initialize games when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show spin wheel by default
+            showGame('spin-wheel');
+        });
+    </script>
+</body>
+</html> 

@@ -23,8 +23,7 @@
                 <li><a href="#amenities" class="nav-link">Amenities</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#spin-wheel" class="nav-link">Spin & Win</a></li>
-                <li><a href="#memory-game" class="nav-link">Memory Game</a></li>
+                <li><a href="games.html" class="nav-link games-btn">Games & Rewards</a></li>
                 <li><a href="#booking" class="nav-link booking-btn">Book Now</a></li>
             </ul>
             <div class="hamburger">
@@ -78,104 +77,29 @@
         </div>
     </section>
 
-    <!-- Spin the Wheel Section -->
-    <section id="spin-wheel" class="spin-wheel-section">
+    <!-- Games Preview Section -->
+    <section class="games-preview">
         <div class="container">
             <div class="section-header">
-                <h2>Spin & Win Exclusive Rewards</h2>
-                <p>Try your luck and win amazing discounts and perks for your stay! (One spin per stay)</p>
+                <h2>Win Exclusive Rewards</h2>
+                <p>Play exciting games and unlock special offers for your stay</p>
             </div>
-            <div class="spin-wheel-container">
-                <div class="wheel-wrapper">
-                    <canvas id="wheel" width="400" height="400"></canvas>
-                    <div class="wheel-pointer"></div>
-                    <button id="spin-btn" class="btn btn-primary spin-button">
-                        <i class="fas fa-play"></i> SPIN THE WHEEL
-                    </button>
+            <div class="games-preview-content">
+                <div class="game-preview-card">
+                    <div class="game-preview-icon">
+                        <i class="fas fa-circle-notch"></i>
+                    </div>
+                    <h3>Spin & Win</h3>
+                    <p>Try your luck and win amazing discounts and perks!</p>
+                    <a href="games.html" class="btn btn-primary">Play Now</a>
                 </div>
-                <div class="wheel-info">
-                    <div class="prize-display">
-                        <h3>Your Prize</h3>
-                        <div id="prize-result" class="prize-result">
-                            <i class="fas fa-gift"></i>
-                            <p>Spin to win amazing rewards!</p>
-                        </div>
+                <div class="game-preview-card">
+                    <div class="game-preview-icon">
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <div class="prize-list">
-                        <h3>Available Prizes</h3>
-                        <ul>
-                            <li><i class="fas fa-percentage"></i> 50% Off Room Rate</li>
-                            <li><i class="fas fa-utensils"></i> Free Breakfast</li>
-                            <li><i class="fas fa-spa"></i> Spa Treatment</li>
-                            <li><i class="fas fa-percentage"></i> 25% Off Room Rate</li>
-                            <li><i class="fas fa-glass-martini"></i> Free Welcome Drink</li>
-                            <li><i class="fas fa-percentage"></i> 15% Off Room Rate</li>
-                            <li><i class="fas fa-parking"></i> Free Valet Parking</li>
-                            <li><i class="fas fa-percentage"></i> 10% Off Room Rate</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Memory Game Section -->
-    <section id="memory-game" class="memory-game-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Memory Match Challenge</h2>
-                <p>Test your memory and win exclusive hotel rewards! Match all cards to unlock special offers.</p>
-            </div>
-            <div class="memory-game-container">
-                <div class="game-wrapper">
-                    <div class="game-header">
-                        <div class="game-stats">
-                            <div class="stat-item">
-                                <i class="fas fa-clock"></i>
-                                <span id="timer">00:00</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-mouse-pointer"></i>
-                                <span id="moves">0</span>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-star"></i>
-                                <span id="score">0</span>
-                            </div>
-                        </div>
-                        <button id="new-game-btn" class="btn btn-primary">
-                            <i class="fas fa-play"></i> NEW GAME
-                        </button>
-                    </div>
-                    <div class="memory-board" id="memory-board">
-                        <!-- Cards will be generated by JavaScript -->
-                    </div>
-                </div>
-                <div class="game-info">
-                    <div class="game-rules">
-                        <h3>How to Play</h3>
-                        <ul>
-                            <li><i class="fas fa-info-circle"></i> Click cards to reveal them</li>
-                            <li><i class="fas fa-sync-alt"></i> Find matching pairs</li>
-                            <li><i class="fas fa-clock"></i> Complete in under 2 minutes</li>
-                            <li><i class="fas fa-trophy"></i> Win exclusive rewards!</li>
-                        </ul>
-                    </div>
-                    <div class="reward-display">
-                        <h3>Your Reward</h3>
-                        <div id="memory-reward" class="memory-reward">
-                            <i class="fas fa-gamepad"></i>
-                            <p>Complete the game to win a special reward!</p>
-                        </div>
-                    </div>
-                    <div class="difficulty-selector">
-                        <h3>Difficulty</h3>
-                        <div class="difficulty-buttons">
-                            <button class="difficulty-btn active" data-difficulty="easy">Easy (4x4)</button>
-                            <button class="difficulty-btn" data-difficulty="medium">Medium (6x6)</button>
-                            <button class="difficulty-btn" data-difficulty="hard">Hard (8x8)</button>
-                        </div>
-                    </div>
+                    <h3>Memory Match</h3>
+                    <p>Test your memory and win exclusive hotel rewards!</p>
+                    <a href="games.html" class="btn btn-primary">Play Now</a>
                 </div>
             </div>
         </div>
