@@ -244,42 +244,113 @@ p {
     background: linear-gradient(45deg, rgba(200, 162, 125, 0.3), rgba(139, 111, 71, 0.3));
 }
 
-/* Features Section */
-.features {
+/* Quick Access Navigation */
+.quick-access {
     padding: 80px 0;
     background: white;
 }
 
-.features-grid {
+.quick-access-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
-.feature-card {
-    text-align: center;
-    padding: 2rem;
-    border-radius: 15px;
+.quick-access-card {
     background: white;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
-.feature-card:hover {
+.quick-access-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(200, 162, 125, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.quick-access-card:hover::before {
+    left: 100%;
+}
+
+.quick-access-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #c8a27d;
 }
 
-.feature-card i {
-    font-size: 3rem;
-    color: #c8a27d;
-    margin-bottom: 1rem;
+.quick-access-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #c8a27d, #8b6f47);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 8px 25px rgba(200, 162, 125, 0.3);
+    transition: all 0.3s ease;
 }
 
-.feature-card h3 {
+.quick-access-card:hover .quick-access-icon {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(200, 162, 125, 0.4);
+}
+
+.quick-access-card h3 {
     color: #2c3e50;
     margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.quick-access-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Special styling for games card */
+.quick-access-card[href="games.html"] .quick-access-icon {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+}
+
+.quick-access-card[href="games.html"]:hover .quick-access-icon {
+    box-shadow: 0 12px 35px rgba(231, 76, 60, 0.4);
+}
+
+.quick-access-card[href="games.html"]:hover {
+    border-color: #e74c3c;
+}
+
+/* Special styling for booking card */
+.quick-access-card[href="#booking"] .quick-access-icon {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+}
+
+.quick-access-card[href="#booking"]:hover .quick-access-icon {
+    box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+}
+
+.quick-access-card[href="#booking"]:hover {
+    border-color: #27ae60;
 }
 
 /* Games Preview Section */
@@ -1387,6 +1458,30 @@ p {
         height: 300px;
     }
 
+    .quick-access-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .quick-access-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .quick-access-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .quick-access-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .quick-access-card p {
+        font-size: 0.8rem;
+    }
+
     .games-hero-content h1 {
         font-size: 2.5rem;
     }
@@ -1505,10 +1600,6 @@ p {
         grid-template-columns: 1fr;
     }
 
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
     .about-stats {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -1532,10 +1623,6 @@ p {
         font-size: 2rem;
     }
 
-    .games-hero-content h1 {
-        font-size: 2rem;
-    }
-
     .btn {
         padding: 10px 20px;
         font-size: 0.9rem;
@@ -1545,47 +1632,35 @@ p {
         margin: 0 10px;
     }
 
-    #wheel {
-        width: 300px;
-        height: 300px;
+    .quick-access-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .spin-button {
-        padding: 12px 30px;
+    .quick-access-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .quick-access-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .quick-access-card h3 {
         font-size: 1rem;
     }
 
-    .spin-wheel-section .section-header h2 {
+    .quick-access-card p {
+        font-size: 0.75rem;
+    }
+
+    h1 {
         font-size: 2rem;
     }
 
-    .spin-wheel-section .section-header p {
-        font-size: 1rem;
-    }
-
-    .memory-game-section .section-header h2 {
-        font-size: 2rem;
-    }
-
-    .memory-game-section .section-header p {
-        font-size: 1rem;
-    }
-
-    .memory-board {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
-        padding: 10px;
-    }
-
-    .memory-card {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-
-    .game-stats {
-        flex-direction: column;
-        gap: 0.5rem;
+    h2 {
+        font-size: 1.8rem;
     }
 }
 
@@ -1604,7 +1679,6 @@ html {
 .nav-link,
 .btn,
 .room-card,
-.feature-card,
 .amenity-item {
     transition: all 0.3s ease;
 }
